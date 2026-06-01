@@ -1,44 +1,346 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema para Psicólogos</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsicoAgenda</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    color:#333;
+}
+
+header{
+    text-align:center;
+    padding:30px;
+    color:white;
+}
+
+header h1{
+    font-size:2.5rem;
+}
+
+header p{
+    opacity:.9;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+nav button{
+    border:none;
+    padding:12px 22px;
+    border-radius:30px;
+    cursor:pointer;
+    background:white;
+    color:#764ba2;
+    font-weight:600;
+    transition:.3s;
+}
+
+nav button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+.section{
+    display:none;
+    animation:fade .5s ease;
+}
+
+.active{
+    display:block;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    margin-bottom:20px;
+}
+
+.card h2{
+    color:#764ba2;
+    margin-bottom:15px;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+button.action{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button.action:hover{
+    transform:scale(1.05);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#764ba2;
+    color:white;
+}
+
+table th, table td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+.stat h3{
+    color:#764ba2;
+    font-size:2rem;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Sistema de Agendamento para Psicólogos</h1>
+    <h1>🧠 PsicoAgenda</h1>
+    <p>Sistema Inteligente de Agendamento para Psicólogos</p>
 </header>
 
 <nav>
-    <a href="#">Home</a>
-    <a href="#">Clientes</a>
-    <a href="#">Serviços</a>
-    <a href="#">Agendamento</a>
-    <a href="#">Consultas</a>
+    <button onclick="mostrar('home')">🏠 Home</button>
+    <button onclick="mostrar('clientes')">👥 Clientes</button>
+    <button onclick="mostrar('servicos')">📋 Serviços</button>
+    <button onclick="mostrar('agendamento')">📅 Agendamento</button>
+    <button onclick="mostrar('consultas')">💬 Consultas</button>
 </nav>
 
-<main>
-    <section class="card">
-        <h2>Home</h2>
-        <p>Bem-vindo ao sistema de gerenciamento psicológico.</p>
+<div class="container">
+
+    <section id="home" class="section active">
+        <div class="stats">
+            <div class="stat">
+                <h3 id="totalClientes">0</h3>
+                <p>Clientes</p>
+            </div>
+
+            <div class="stat">
+                <h3 id="totalConsultas">0</h3>
+                <p>Consultas</p>
+            </div>
+
+            <div class="stat">
+                <h3>3</h3>
+                <p>Serviços</p>
+            </div>
+        </div>
     </section>
 
-    <section class="card">
-        <h2>Clientes</h2>
-        <input type="text" placeholder="Nome do cliente">
-        <button>Cadastrar</button>
+    <section id="clientes" class="section">
+        <div class="card">
+            <h2>Cadastro de Clientes</h2>
+
+            <input type="text" id="clienteNome" placeholder="Nome do cliente">
+
+            <button class="action" onclick="cadastrarCliente()">
+                Cadastrar
+            </button>
+
+            <table id="tabelaClientes">
+                <tr>
+                    <th>Nome</th>
+                </tr>
+            </table>
+        </div>
     </section>
 
-    <section class="card">
-        <h2>Agendamento</h2>
-        <input type="date">
-        <input type="time">
-        <button>Agendar</button>
+    <section id="servicos" class="section">
+        <div class="card">
+            <h2>Serviços Disponíveis</h2>
+
+            <ul>
+                <li>🧠 Psicoterapia Individual</li>
+                <li>❤️ Terapia de Casal</li>
+                <li>📑 Avaliação Psicológica</li>
+            </ul>
+        </div>
     </section>
-</main>
+
+    <section id="agendamento" class="section">
+        <div class="card">
+            <h2>Novo Agendamento</h2>
+
+            <input type="text" id="paciente" placeholder="Nome do paciente">
+
+            <select id="servico">
+                <option>Psicoterapia Individual</option>
+                <option>Terapia de Casal</option>
+                <option>Avaliação Psicológica</option>
+            </select>
+
+            <input type="date" id="data">
+            <input type="time" id="hora">
+
+            <button class="action" onclick="agendar()">
+                Agendar Consulta
+            </button>
+        </div>
+    </section>
+
+    <section id="consultas" class="section">
+        <div class="card">
+            <h2>Consultas Agendadas</h2>
+
+            <table id="tabelaConsultas">
+                <tr>
+                    <th>Paciente</th>
+                    <th>Serviço</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+<script>
+let clientes = 0;
+let consultas = 0;
+
+function mostrar(secao){
+    document.querySelectorAll(".section")
+    .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(secao)
+    .classList.add("active");
+}
+
+function cadastrarCliente(){
+
+    let nome =
+    document.getElementById("clienteNome").value;
+
+    if(nome === ""){
+        alert("Digite um nome.");
+        return;
+    }
+
+    let tabela =
+    document.getElementById("tabelaClientes");
+
+    let linha = tabela.insertRow();
+
+    linha.insertCell(0).innerText = nome;
+
+    clientes++;
+
+    document.getElementById("totalClientes")
+    .innerText = clientes;
+
+    document.getElementById("clienteNome")
+    .value = "";
+
+    alert("Cliente cadastrado!");
+}
+
+function agendar(){
+
+    let paciente =
+    document.getElementById("paciente").value;
+
+    let servico =
+    document.getElementById("servico").value;
+
+    let data =
+    document.getElementById("data").value;
+
+    let hora =
+    document.getElementById("hora").value;
+
+    if(!paciente || !data || !hora){
+        alert("Preencha todos os campos.");
+        return;
+    }
+
+    let tabela =
+    document.getElementById("tabelaConsultas");
+
+    let linha = tabela.insertRow();
+
+    linha.insertCell(0).innerText = paciente;
+    linha.insertCell(1).innerText = servico;
+    linha.insertCell(2).innerText = data;
+    linha.insertCell(3).innerText = hora;
+
+    consultas++;
+
+    document.getElementById("totalConsultas")
+    .innerText = consultas;
+
+    alert("Consulta agendada com sucesso!");
+
+    document.getElementById("paciente").value="";
+    document.getElementById("data").value="";
+    document.getElementById("hora").value="";
+}
+</script>
 
 </body>
 </html>
