@@ -1,404 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PsicoAgenda</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
-
-body{
-    background:#f4f6f9;
-}
-
-/* CAPA */
-
-.hero{
-    height:100vh;
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-}
-
-.hero-content{
-    max-width:700px;
-}
-
-.hero h1{
-    font-size:4rem;
-    margin-bottom:20px;
-}
-
-.hero p{
-    font-size:1.3rem;
-    margin-bottom:30px;
-}
-
-.hero button{
-    padding:15px 35px;
-    border:none;
-    border-radius:50px;
-    background:white;
-    color:#764ba2;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:1rem;
-    transition:.3s;
-}
-
-.hero button:hover{
-    transform:scale(1.05);
-}
-
-/* SISTEMA */
-
-header{
-    background:#764ba2;
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-
-nav{
-    background:white;
-    padding:15px;
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
-    box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-
-nav button{
-    border:none;
-    background:#764ba2;
-    color:white;
-    padding:10px 18px;
-    border-radius:30px;
-    cursor:pointer;
-}
-
-.container{
-    width:90%;
-    max-width:1200px;
-    margin:30px auto;
-}
-
-.section{
-    display:none;
-}
-
-.active{
-    display:block;
-}
-
-.card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    margin-bottom:20px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-}
-
-.stat{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.stat h2{
-    color:#764ba2;
-    font-size:2rem;
-}
-
-input, select{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:10px;
-}
-
-.action{
-    background:#764ba2;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:15px;
-}
-
-th{
-    background:#764ba2;
-    color:white;
-}
-
-th,td{
-    padding:12px;
-    border:1px solid #ddd;
-    text-align:center;
-}
-
-/* RODAPÉ */
-
-footer{
-    background:#1f2937;
-    color:white;
-    text-align:center;
-    padding:30px;
-    margin-top:50px;
-}
-
-footer p{
-    margin:8px 0;
-}
-</style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilo.css">
+    <title>SisCristóvão - Home</title>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+    </nav>
 
-<!-- CAPA -->
+    <header class="banner">
+        <h1>SisCristóvão</h1>
+        <p>Controle de Serviços e Agendamentos Práticos</p>
+        <img src="imagens/banner.jtif" alt="SisCristóvão 1.0" width="300">
+    </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>🧠 PsicoAgenda</h1>
-        <p>
-            Sistema inteligente para psicólogos.
-            Organize pacientes, serviços e consultas
-            em um único lugar.
-        </p>
-
-        <button onclick="entrarSistema()">
-            Entrar no Sistema
-        </button>
-    </div>
-</section>
-
-<!-- SISTEMA -->
-
-<div id="sistema" style="display:none;">
-
-<header>
-    <h1>PsicoAgenda</h1>
-</header>
-
-<nav>
-    <button onclick="mostrar('home')">🏠 Home</button>
-    <button onclick="mostrar('clientes')">👥 Clientes</button>
-    <button onclick="mostrar('servicos')">📋 Serviços</button>
-    <button onclick="mostrar('agendamento')">📅 Agendamento</button>
-    <button onclick="mostrar('consultas')">💬 Consultas</button>
-</nav>
-
-<div class="container">
-
-    <section id="home" class="section active">
-        <div class="stats">
-
-            <div class="stat">
-                <h2 id="clientesTotal">0</h2>
-                <p>Clientes</p>
-            </div>
-
-            <div class="stat">
-                <h2 id="consultasTotal">0</h2>
-                <p>Consultas</p>
-            </div>
-
-            <div class="stat">
-                <h2>3</h2>
-                <p>Serviços</p>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="clientes" class="section">
+    <div class="container">
         <div class="card">
-            <h2>Cadastro de Clientes</h2>
+            <h1>Bem-vindo ao SisCristóvão 1.0</h1>
+            <p>Uma plataforma didática desenvolvida para gerenciar a prestação de serviços, organizar a alocação de equipes e otimizar o fluxo de agendamentos dos alunos do São Cristóvão.</p>
+            
+            <p>Este sistema conecta a interface Web ao banco de dados SQLite para simular um ambiente real de ordens de serviço e atendimento ao cliente.</p>
+        </div>
 
-            <input type="text" id="cliente" placeholder="Nome do cliente">
-
-            <button class="action" onclick="cadastrarCliente()">
-                Cadastrar
-            </button>
-
-            <table id="listaClientes">
-                <tr>
-                    <th>Nome</th>
-                </tr>
+        <div class="card" style="margin-top: 20px;">
+            <h3>🚀 Módulos Práticos do Sistema:</h3>
+            <table border="1" style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr style="background-color: #eee;">
+                        <th>Módulo</th>
+                        <th>Descrição Operacional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>👥 <strong>Clientes</strong></td>
+                        <td>Cadastro de solicitantes e gerenciamento de contatos para assistência técnica.</td>
+                    </tr>
+                    <tr>
+                        <td>🛠️ <strong>Serviços</strong></td>
+                        <td>Catálogo de serviços disponíveis, incluindo escopo, prazos estimados e valores.</td>
+                    </tr>
+                    <tr>
+                        <td>📅 <strong>Agendamentos</strong></td>
+                        <td>Abertura de ordens de serviço, reserva de horários e alocação de alunos responsáveis.</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-    </section>
 
-    <section id="servicos" class="section">
-        <div class="card">
-            <h2>Serviços Disponíveis</h2>
-
+        <div class="card" style="margin-top: 20px;">
+            <h3>📊 Estrutura Tecnológica</h3>
             <ul>
-                <li>🧠 Psicoterapia Individual</li>
-                <li>❤️ Terapia de Casal</li>
-                <li>📑 Avaliação Psicológica</li>
+                <li><strong>Ambiente Escolar:</strong> Práticas de laboratório na Unidade São Cristóvão.</li>
+                <li><strong>Backend:</strong> Node.js com Express e API RESTful.</li>
+                <li><strong>Banco de Dados:</strong> SQLite (`siscristovao.db`) com relacionamentos mestre-detalhe.</li>
             </ul>
         </div>
-    </section>
+    </div>
 
-    <section id="agendamento" class="section">
-        <div class="card">
-            <h2>Novo Agendamento</h2>
-
-            <input type="text" id="paciente" placeholder="Nome do paciente">
-
-            <select id="servico">
-                <option>Psicoterapia Individual</option>
-                <option>Terapia de Casal</option>
-                <option>Avaliação Psicológica</option>
-            </select>
-
-            <input type="date" id="data">
-            <input type="time" id="hora">
-
-            <button class="action" onclick="agendar()">
-                Agendar Consulta
-            </button>
+    <footer class="rodape">
+        <div class="container-rodape">
+            <p>&copy; 2026 SisCristóvão - Sistema de Controle de Serviços</p>
+            <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
         </div>
-    </section>
-
-    <section id="consultas" class="section">
-        <div class="card">
-            <h2>Consultas Agendadas</h2>
-
-            <table id="listaConsultas">
-                <tr>
-                    <th>Paciente</th>
-                    <th>Serviço</th>
-                    <th>Data</th>
-                    <th>Hora</th>
-                </tr>
-            </table>
-        </div>
-    </section>
-
-</div>
-
-<footer>
-    <h3>PsicoAgenda</h3>
-    <p>Gerenciamento moderno para psicólogos.</p>
-    <p>© 2026 Todos os direitos reservados.</p>
-</footer>
-
-</div>
-
-<script>
-let clientes = 0;
-let consultas = 0;
-
-function entrarSistema(){
-    document.querySelector('.hero').style.display='none';
-    document.getElementById('sistema').style.display='block';
-}
-
-function mostrar(secao){
-
-    document.querySelectorAll('.section')
-    .forEach(item=>{
-        item.classList.remove('active');
-    });
-
-    document.getElementById(secao)
-    .classList.add('active');
-}
-
-function cadastrarCliente(){
-
-    let nome = document.getElementById('cliente').value;
-
-    if(nome === ''){
-        alert('Digite um nome.');
-        return;
-    }
-
-    let tabela =
-    document.getElementById('listaClientes');
-
-    let linha = tabela.insertRow();
-
-    linha.insertCell(0).innerText = nome;
-
-    clientes++;
-
-    document.getElementById('clientesTotal')
-    .innerText = clientes;
-
-    document.getElementById('cliente').value='';
-
-    alert('Cliente cadastrado com sucesso!');
-}
-
-function agendar(){
-
-    let paciente =
-    document.getElementById('paciente').value;
-
-    let servico =
-    document.getElementById('servico').value;
-
-    let data =
-    document.getElementById('data').value;
-
-    let hora =
-    document.getElementById('hora').value;
-
-    if(!paciente || !data || !hora){
-        alert('Preencha todos os campos.');
-        return;
-    }
-
-    let tabela =
-    document.getElementById('listaConsultas');
-
-    let linha = tabela.insertRow();
-
-    linha.insertCell(0).innerText = paciente;
-    linha.insertCell(1).innerText = servico;
-    linha.insertCell(2).innerText = data;
-    linha.insertCell(3).innerText = hora;
-
-    consultas++;
-
-    document.getElementById('consultasTotal')
-    .innerText = consultas;
-
-    alert('Consulta agendada!');
-
-    document.getElementById('paciente').value='';
-    document.getElementById('data').value='';
-    document.getElementById('hora').value='';
-}
-</script>
-
+    </footer>
 </body>
 </html>
