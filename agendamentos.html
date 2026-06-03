@@ -1,231 +1,115 @@
 ```html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PsicoAgenda - Agendamento de Consultas</title>
     <link rel="stylesheet" href="estilo.css">
+    <title>PsicoAgenda - Cadastro de Pacientes</title>
 </head>
-
 <body>
 
-    <!-- MENU -->
-    <nav class="menu">
-        <div class="logo">
-            🧠 PsicoAgenda
-        </div>
-
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="pacientes.html">Pacientes</a></li>
-            <li><a href="especialidades.html">Especialidades</a></li>
-            <li><a href="agendamentos.html">Agendamentos</a></li>
-            <li><a href="consultas.html">Consultas</a></li>
-        </ul>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pacientes.html">Pacientes</a>
+        <a href="especialidades.html">Especialidades</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="consultas.html">Consultas</a>
     </nav>
+    
+<header class="banner">
+    <h1>Agendamento de Consultas</h1>
+    <p>Organize consultas psicológicas de forma prática e eficiente</p>
+</header>
 
-    <!-- BANNER -->
-    <section class="banner">
-        <h1>Agendamento de Consultas</h1>
-        <p>
-            Organize os atendimentos psicológicos de maneira simples,
-            rápida e segura.
-        </p>
-    </section>
+<div class="container">
 
-    <!-- CONTEÚDO -->
-    <main class="container">
+    <div style="margin-bottom:20px;">
+        <button onclick="window.location.href='consultas.html'">
+            📋 Histórico de Consultas
+        </button>
+    </div>
 
-        <!-- BOTÃO HISTÓRICO -->
-        <div class="acoes-topo">
-            <button
-                class="btn-secundario"
-                onclick="window.location.href='consultas.html'">
+    <div class="card">
+        <h2>Novo Agendamento</h2>
 
-                📋 Histórico de Consultas
+        <label for="selPaciente">Paciente:</label>
+        <select id="selPaciente">
+            <option value="">Selecione o paciente...</option>
+        </select>
 
-            </button>
+        <label for="data_consulta">Data e Hora da Consulta:</label>
+        <input type="datetime-local" id="data_consulta">
+
+        <label for="psicologo">Psicólogo Responsável:</label>
+        <input type="text" id="psicologo"
+               placeholder="Ex: Dra. Maria Silva">
+
+        <hr>
+
+        <h3>🧠 Tipo de Atendimento</h3>
+
+        <label for="selConsulta">Tipo de Consulta:</label>
+        <select id="selConsulta" onchange="atualizarConsulta()">
+            <option value="">Selecione...</option>
+        </select>
+
+        <div style="display:flex; gap:15px; margin-top:10px;">
+
+            <div style="flex:1;">
+                <label>Valor da Consulta (R$)</label>
+                <input type="number"
+                       id="txtValor"
+                       readonly>
+            </div>
+
+            <div style="flex:1;">
+                <label>Duração (Minutos)</label>
+                <input type="number"
+                       id="txtDuracao"
+                       readonly>
+            </div>
+
         </div>
 
-        <!-- FORMULÁRIO -->
-        <section class="card">
+        <button type="button"
+                onclick="adicionarConsulta()"
+                style="margin-top:15px;">
+            ➕ Adicionar Consulta
+        </button>
+    </div>
 
-            <h2>➕ Novo Agendamento</h2>
+    <div class="card" style="margin-top:20px;">
 
-            <div class="form-group">
+        <h2>Consultas Agendadas</h2>
 
-                <label>Paciente</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>Consulta</th>
+                    <th>Duração</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
 
-                <select id="selPaciente">
-                    <option value="">
-                        Selecione um paciente...
-                    </option>
-                </select>
+            <tbody id="lista-consultas">
+            </tbody>
+        </table>
 
-            </div>
+        <div style="text-align:right; margin-top:15px;">
+            <h3 id="txtTotal">
+                Valor Total: R$ 0,00
+            </h3>
 
-            <div class="form-group">
+            <h4 id="txtTempoTotal">
+                Tempo Total: 0 min
+            </h4>
+        </div>
 
-                <label>Data e Hora</label>
-
-                <input
-                    type="datetime-local"
-                    id="data_consulta">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Psicólogo Responsável</label>
-
-                <input
-                    type="text"
-                    id="psicologo"
-                    placeholder="Ex: Dra. Maria Silva">
-
-            </div>
-
-            <hr>
-
-            <h3>🧠 Tipo de Atendimento</h3>
-
-            <div class="form-group">
-
-                <label>Consulta</label>
-
-                <select
-                    id="selConsulta"
-                    onchange="atualizarConsulta()">
-
-                    <option value="">
-                        Selecione uma consulta...
-                    </option>
-
-                    <option>
-                        Psicoterapia Individual
-                    </option>
-
-                    <option>
-                        Terapia de Casal
-                    </option>
-
-                    <option>
-                        Terapia Familiar
-                    </option>
-
-                    <option>
-                        Atendimento Infantil
-                    </option>
-
-                    <option>
-                        Avaliação Psicológica
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="linha">
-
-                <div class="form-group">
-
-                    <label>Valor da Consulta</label>
-
-                    <input
-                        type="number"
-                        id="txtValor"
-                        readonly>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Duração</label>
-
-                    <input
-                        type="number"
-                        id="txtDuracao"
-                        readonly>
-
-                </div>
-
-            </div>
-
-            <button
-                class="btn-principal"
-                onclick="adicionarConsulta()">
-
-                ➕ Adicionar Consulta
-
-            </button>
-
-        </section>
-
-        <!-- RESUMO -->
-        <section class="card">
-
-            <h2>📅 Consultas Agendadas</h2>
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Consulta</th>
-                        <th>Duração</th>
-                        <th>Valor</th>
-                    </tr>
-                </thead>
-
-                <tbody id="lista-consultas">
-
-                    <tr>
-                        <td colspan="3">
-                            Nenhuma consulta adicionada.
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-            <div class="resumo">
-
-                <h3 id="txtTotal">
-                    Valor Total: R$ 0,00
-                </h3>
-
-                <h4 id="txtTempoTotal">
-                    Tempo Total: 0 minutos
-                </h4>
-
-            </div>
-
-            <button
-                class="btn-salvar"
+        <button type="button"
                 onclick="salvarConsulta()">
+            💾 Confirmar Agendamento
+        </button>
 
-                💾 Confirmar Agendamento
+    </div>
 
-            </button>
-
-        </section>
-
-    </main>
-
-    <!-- RODAPÉ -->
-    <footer class="rodape">
-
-        <p>
-            © 2026 PsicoAgenda
-        </p>
-
-        <p>
-            Sistema de Gestão para Psicólogos e Clínicas
-        </p>
-
-    </footer>
-
-</body>
-</html>
-```
+</div> refaça esse codigo
