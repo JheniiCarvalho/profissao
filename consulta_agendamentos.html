@@ -1,133 +1,195 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="estilo.css">
-    <title>SisCristóvão - Consulta de Agendamentos</title>
+    <title>PsicoAgenda - Histórico de Consultas</title>
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
+        <a href="pacientes.html">Pacientes</a>
+        <a href="especialidades.html">Especialidades</a>
         <a href="agendamentos.html">Agendamentos</a>
-        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+        <a href="consultas.html">Consultas</a>
     </nav>
 
     <header class="banner">
-        <h1>Histórico de Agendamentos</h1>
-        <p>Consulte as Ordens de Serviço abertas e alocações de equipes</p>
+        <h1>Histórico de Consultas</h1>
+        <p>Consulte os atendimentos psicológicos agendados e realizados</p>
     </header>
 
     <div class="container">
+
         <div class="card">
-            <h2>Agendamentos Registrados (Mestre)</h2>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                Clique em "Ver Detalhes" para examinar os serviços específicos alocados a cada horário.
+            <h2>Consultas Registradas</h2>
+
+            <p style="font-size:0.9rem; margin-bottom:15px;">
+                Clique em "Ver Detalhes" para visualizar as informações da consulta.
             </p>
+
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Data / Hora</th>
-                        <th>Cliente</th>
-                        <th>Responsável</th>
-                        <th>Total</th>
+                        <th>Data/Hora</th>
+                        <th>Paciente</th>
+                        <th>Psicólogo</th>
+                        <th>Valor</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
-                <tbody id="lista-agendamentos-consulta">
-                    </tbody>
+
+                <tbody id="lista-consultas">
+                </tbody>
+
             </table>
         </div>
 
-        <div id="card-detalhes" class="card" style="margin-top: 25px; display: none; border-left: 6px solid var(--accent-red);">
-            <h2>Detalhes da Ordem de Serviço #<span id="num-agendamento"></span></h2>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                Serviços técnicos executados nesta reserva:
+        <div id="card-detalhes"
+             class="card"
+             style="margin-top:25px; display:none; border-left:6px solid #6c63ff;">
+
+            <h2>Detalhes da Consulta #<span id="num-consulta"></span></h2>
+
+            <p style="font-size:0.9rem; margin-bottom:15px;">
+                Informações do atendimento psicológico.
             </p>
+
             <table>
                 <thead>
                     <tr>
-                        <th>Serviço Técnico</th>
-                        <th>Tempo Estimado</th>
-                        <th>Preço (R$)</th>
+                        <th>Tipo de Consulta</th>
+                        <th>Duração</th>
+                        <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody id="lista-servicos-detalhe">
-                    </tbody>
+
+                <tbody id="lista-detalhes-consulta">
+                </tbody>
             </table>
+
         </div>
+
     </div>
 
-    <script {="" }="">
-        // Executa automaticamente ao carregar a página para preencher a tabela Mestre
+    <script>
+
         window.onload = function() {
+
             fetch('/listar-agendamentos')
                 .then(res => res.json())
-                .then(agendamentos => {
-                    const corpoTabela = document.getElementById('lista-agendamentos-consulta');
-                    corpoTabela.innerHTML = "";
-                    
-                    agendamentos.forEach(a => {
-                        // Formatação amigável para a data vinda do datetime-local
-                        const dataFormatada = new Date(a.data).toLocaleString('pt-BR', {
-                            dateStyle: 'short',
-                            timeStyle: 'short'
-                        });
+                .then(consultas => {
 
-                        corpoTabela.innerHTML += `
+                    const tabela =
+                        document.getElementById('lista-consultas');
+
+                    tabela.innerHTML = "";
+
+                    consultas.forEach(c => {
+
+                        const dataFormatada =
+                            new Date(c.data).toLocaleString(
+                                'pt-BR',
+                                {
+                                    dateStyle: 'short',
+                                    timeStyle: 'short'
+                                }
+                            );
+
+                        tabela.innerHTML += `
                             <tr>
-                                <td>${a.id}</td>
+                                <td>${c.id}</td>
                                 <td>${dataFormatada}</td>
-                                <td><strong>${a.nome_cliente}</strong></td>
-                                <td>${a.responsavel}</td>
-                                <td>R$ ${a.total.toFixed(2)}</td>
                                 <td>
-                                    <button onclick="verDetalhes(${a.id})">Ver Detalhes</button>
+                                    <strong>${c.nome_paciente}</strong>
                                 </td>
-                            </tr>`;
+                                <td>${c.psicologo}</td>
+                                <td>R$ ${c.total.toFixed(2)}</td>
+                                <td>
+                                    <button onclick="verDetalhes(${c.id})">
+                                        Ver Detalhes
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
+
                 })
-                .catch(err => console.error("Erro ao listar agendamentos:", err));
+                .catch(err =>
+                    console.error(
+                        "Erro ao listar consultas:",
+                        err
+                    )
+                );
         };
 
-        // Função para carregar e exibir os Detalhes do agendamento clicado
-        function verDetalhes(idAgendamento) {
-            fetch(`/detalhes-agendamento/${idAgendamento}`)
+        function verDetalhes(idConsulta) {
+
+            fetch(`/detalhes-agendamento/${idConsulta}`)
                 .then(res => res.json())
-                .then(servicos => {
-                    // Torna o card visível e atualiza o número da O.S.
-                    document.getElementById('card-detalhes').style.display = 'block';
-                    document.getElementById('num-agendamento').innerText = idAgendamento;
-                    
-                    const corpoDetalhe = document.getElementById('lista-servicos-detalhe');
-                    corpoDetalhe.innerHTML = "";
-                    
-                    servicos.forEach(item => {
-                        corpoDetalhe.innerHTML += `
+                .then(detalhes => {
+
+                    document.getElementById(
+                        'card-detalhes'
+                    ).style.display = 'block';
+
+                    document.getElementById(
+                        'num-consulta'
+                    ).innerText = idConsulta;
+
+                    const tabelaDetalhes =
+                        document.getElementById(
+                            'lista-detalhes-consulta'
+                        );
+
+                    tabelaDetalhes.innerHTML = "";
+
+                    detalhes.forEach(item => {
+
+                        tabelaDetalhes.innerHTML += `
                             <tr>
-                                <td><strong>${item.descricao}</strong></td>
-                                <td>${item.tempo_estimado}h</td>
-                                <td>R$ ${item.preco_cobrado.toFixed(2)}</td>
-                            </tr>`;
+                                <td>
+                                    <strong>${item.descricao}</strong>
+                                </td>
+                                <td>
+                                    ${item.duracao} min
+                                </td>
+                                <td>
+                                    R$ ${item.valor.toFixed(2)}
+                                </td>
+                            </tr>
+                        `;
                     });
-                    
-                    // Rola a tela suavemente até o card de detalhes para melhorar a usabilidade
+
                     window.scrollTo({
-                        top: document.getElementById('card-detalhes').offsetTop - 20,
+                        top: document.getElementById(
+                            'card-detalhes'
+                        ).offsetTop - 20,
                         behavior: 'smooth'
                     });
+
                 })
-                .catch(err => console.error("Erro ao carregar detalhes:", err));
+                .catch(err =>
+                    console.error(
+                        "Erro ao carregar detalhes:",
+                        err
+                    )
+                );
         }
+
     </script>
+
 </body>
 
 <footer class="rodape">
     <div class="container-rodape">
-        <p>&copy; 2026 SisCristóvão - Sistema de Controle de Serviços</p>
-        <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
+        <p>&copy; 2026 PsicoAgenda</p>
+        <p>Sistema de Agendamento para Psicólogos e Clínicas</p>
     </div>
 </footer>
+
 </html>
+```
