@@ -1,0 +1,36 @@
+.resumo{
+    text-align:center;
+}
+
+.estatisticas{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.info-box{
+    background:#6c63ff;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    min-width:200px;
+}
+
+.info-box span{
+    font-size:2rem;
+    font-weight:bold;
+}
+
+button{
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+table{
+    width:100%;
+    overflow-x:auto;
+}
