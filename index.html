@@ -2,73 +2,109 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <title>PsicoAgenda - Home</title>
     <link rel="stylesheet" href="estilo.css">
-    <title>SisCristóvão - Home</title>
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
+        <a href="clientes.html">Pacientes</a>
+        <a href="servicos.html">Especialidades</a>
         <a href="agendamentos.html">Agendamentos</a>
-        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+        <a href="consultas.html">Consultas</a>
     </nav>
 
     <header class="banner">
-        <h1>SisCristóvão</h1>
-        <p>Controle de Serviços e Agendamentos Práticos</p>
-        <img src="imagens/banner.jtif" alt="SisCristóvão 1.0" width="300">
+        <h1>PsicoAgenda</h1>
+        <p>Gestão de Consultas Psicológicas de Forma Simples e Segura</p>
+        <img src="imagens/psicologia.jpg" alt="Psicologia" width="300">
     </header>
 
     <div class="container">
+
         <div class="card">
-            <h1>Bem-vindo ao SisCristóvão 1.0</h1>
-            <p>Uma plataforma didática desenvolvida para gerenciar a prestação de serviços, organizar a alocação de equipes e otimizar o fluxo de agendamentos dos alunos do São Cristóvão.</p>
-            
-            <p>Este sistema conecta a interface Web ao banco de dados SQLite para simular um ambiente real de ordens de serviço e atendimento ao cliente.</p>
+            <h1>Bem-vindo ao PsicoAgenda</h1>
+
+            <p>
+                O PsicoAgenda é um sistema desenvolvido para auxiliar
+                psicólogos e clínicas no gerenciamento de pacientes,
+                consultas e agendamentos.
+            </p>
+
+            <p>
+                A plataforma permite organizar horários, acompanhar
+                atendimentos e manter os dados dos pacientes de forma
+                prática e eficiente.
+            </p>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h3>🚀 Módulos Práticos do Sistema:</h3>
-            <table border="1" style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <div class="card" style="margin-top:20px;">
+            <h3>🧠 Módulos do Sistema</h3>
+
+            <table border="1" style="width:100%; border-collapse:collapse;">
                 <thead>
-                    <tr style="background-color: #eee;">
+                    <tr>
                         <th>Módulo</th>
-                        <th>Descrição Operacional</th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr>
-                        <td>👥 <strong>Clientes</strong></td>
-                        <td>Cadastro de solicitantes e gerenciamento de contatos para assistência técnica.</td>
+                        <td>👤 Pacientes</td>
+                        <td>Cadastro e gerenciamento de informações dos pacientes.</td>
                     </tr>
+
                     <tr>
-                        <td>🛠️ <strong>Serviços</strong></td>
-                        <td>Catálogo de serviços disponíveis, incluindo escopo, prazos estimados e valores.</td>
+                        <td>📅 Agendamentos</td>
+                        <td>Marcação, alteração e cancelamento de consultas.</td>
                     </tr>
+
                     <tr>
-                        <td>📅 <strong>Agendamentos</strong></td>
-                        <td>Abertura de ordens de serviço, reserva de horários e alocação de alunos responsáveis.</td>
+                        <td>🩺 Especialidades</td>
+                        <td>Controle das áreas de atendimento psicológico.</td>
+                    </tr>
+
+                    <tr>
+                        <td>📋 Consultas</td>
+                        <td>Visualização das consultas agendadas e realizadas.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h3>📊 Estrutura Tecnológica</h3>
+        <div class="card" style="margin-top:20px;">
+            <h3>💙 Benefícios</h3>
+
             <ul>
-                <li><strong>Ambiente Escolar:</strong> Práticas de laboratório na Unidade São Cristóvão.</li>
-                <li><strong>Backend:</strong> Node.js com Express e API RESTful.</li>
-                <li><strong>Banco de Dados:</strong> SQLite (`siscristovao.db`) com relacionamentos mestre-detalhe.</li>
+                <li>Controle completo de pacientes.</li>
+                <li>Organização automática da agenda.</li>
+                <li>Consulta rápida dos horários disponíveis.</li>
+                <li>Histórico de atendimentos.</li>
+                <li>Interface simples e intuitiva.</li>
             </ul>
         </div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3>📊 Tecnologias Utilizadas</h3>
+
+            <ul>
+                <li><strong>Frontend:</strong> HTML, CSS e JavaScript.</li>
+                <li><strong>Backend:</strong> Node.js e Express.</li>
+                <li><strong>Banco de Dados:</strong> SQLite.</li>
+                <li><strong>API:</strong> RESTful.</li>
+            </ul>
+        </div>
+
     </div>
 
     <footer class="rodape">
         <div class="container-rodape">
-            <p>&copy; 2026 SisCristóvão - Sistema de Controle de Serviços</p>
-            <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
+            <p>&copy; 2026 PsicoAgenda</p>
+            <p>Sistema de Agendamento para Psicólogos e Clínicas</p>
         </div>
     </footer>
+
 </body>
 </html>
