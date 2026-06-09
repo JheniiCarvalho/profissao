@@ -1,82 +1,170 @@
+```html
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PsicoAgenda - Especialidades</title>
     <link rel="stylesheet" href="estilo.css">
-    <title>SisCristóvão - Cadastro de Serviços</title>
 </head>
+
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+
+    <nav class="menu">
+        <div class="logo">
+            🧠 PsicoAgenda
+        </div>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pacientes.html">Pacientes</a></li>
+            <li><a href="especialidades.html">Especialidades</a></li>
+            <li><a href="agendamentos.html">Agendamentos</a></li>
+            <li><a href="consultas.html">Consultas</a></li>
+        </ul>
     </nav>
 
     <header class="banner">
-        <h1>Gestão de Serviços</h1>
-        <p>Cadastre e configure o catálogo de assistência técnica do laboratório</p>
+        <h1>🧠 Especialidades e Atendimentos</h1>
+        <p>
+            Cadastre os tipos de consultas e serviços psicológicos oferecidos pela clínica.
+        </p>
     </header>
 
     <div class="container">
+
         <div class="card">
-            <h2>Novo Serviço</h2>
-            <form action="/salvar-servico" method="POST">
-                <label for="descricao">Descrição do Serviço:</label>
-                <input type="text" id="descricao" name="descricao" placeholder="Ex: Formatação e Instalação de Sistema Operacional" required>
-                
-                <label for="preco">Preço / Custo de Materiais (R$):</label>
-                <input type="number" step="0.01" id="preco" name="preco" placeholder="0.00" required>
-                
-                <label for="tempo_estimado">Tempo Estimado (em horas):</label>
-                <input type="number" id="tempo_estimado" name="tempo_estimado" placeholder="Ex: 2" min="1" required>
-                
-                <button type="submit">Salvar Serviço</button>
+
+            <h2>➕ Nova Especialidade</h2>
+
+            <form action="/salvar-especialidade" method="POST">
+
+                <label for="descricao">
+                    Nome da Especialidade / Consulta:
+                </label>
+
+                <input
+                    type="text"
+                    id="descricao"
+                    name="descricao"
+                    placeholder="Ex: Psicoterapia Individual"
+                    required>
+
+                <label for="valor">
+                    Valor da Consulta (R$):
+                </label>
+
+                <input
+                    type="number"
+                    step="0.01"
+                    id="valor"
+                    name="valor"
+                    placeholder="150.00"
+                    required>
+
+                <label for="duracao">
+                    Duração da Sessão (Minutos):
+                </label>
+
+                <input
+                    type="number"
+                    id="duracao"
+                    name="duracao"
+                    placeholder="50"
+                    min="1"
+                    required>
+
+                <button type="submit">
+                    💾 Salvar Especialidade
+                </button>
+
             </form>
+
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h2>Serviços Disponíveis</h2>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">
-                Catálogo de atividades técnicas executadas pelos alunos no laboratório do São Cristóvão.
+        <div class="card" style="margin-top:20px;">
+
+            <h2>📋 Especialidades Disponíveis</h2>
+
+            <p style="font-size:0.9rem; margin-bottom:15px;">
+                Lista de atendimentos psicológicos cadastrados no sistema.
             </p>
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>Descrição</th>
-                        <th>Preço (R$)</th>
-                        <th>Tempo Estimado</th>
+                        <th>Especialidade</th>
+                        <th>Valor</th>
+                        <th>Duração</th>
                     </tr>
                 </thead>
-                <tbody id="lista-servicos">
-                    </tbody>
+
+                <tbody id="lista-especialidades">
+
+                </tbody>
+
             </table>
+
         </div>
+
     </div>
 
     <script>
-        fetch('/listar-servicos')
+
+        fetch('/listar-especialidades')
             .then(res => res.json())
-            .then(servicos => {
-                const corpoTabela = document.getElementById('lista-servicos');
-                servicos.forEach(s => {
-                    corpoTabela.innerHTML += `
+            .then(especialidades => {
+
+                const tabela =
+                    document.getElementById(
+                        'lista-especialidades'
+                    );
+
+                especialidades.forEach(e => {
+
+                    tabela.innerHTML += `
                         <tr>
-                            <td><strong>${s.descricao}</strong></td>
-                            <td>R$ ${s.preco.toFixed(2)}</td>
-                            <td>${s.tempo_estimado}h</td>
-                        </tr>`;
+                            <td>
+                                <strong>${e.descricao}</strong>
+                            </td>
+
+                            <td>
+                                R$ ${e.valor.toFixed(2)}
+                            </td>
+
+                            <td>
+                                ${e.duracao} min
+                            </td>
+                        </tr>
+                    `;
                 });
             })
-            .catch(err => console.error("Erro ao listar serviços:", err));
-    </script>
-</body>
+            .catch(err =>
+                console.error(
+                    "Erro ao listar especialidades:",
+                    err
+                )
+            );
 
-<footer class="rodape">
-    <div class="container-rodape">
-        <p>&copy; 2026 SisCristóvão - Sistema de Controle de Serviços</p>
-        <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
-    </div>
-</footer>
+    </script>
+
+    <footer class="rodape">
+
+        <div class="container-rodape">
+
+            <p>
+                © 2026 PsicoAgenda
+            </p>
+
+            <p>
+                Sistema de Gestão para Psicólogos e Clínicas
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
 </html>
+```
