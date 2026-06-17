@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PsicoAgenda - Cadastro de Pacientes</title>
+<title>PsicoAgenda</title>
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
@@ -28,6 +28,11 @@ nav a{
     text-decoration:none;
     margin:0 15px;
     font-weight:bold;
+    cursor:pointer;
+}
+
+nav a:hover{
+    color:#ffd700;
 }
 
 .banner{
@@ -58,11 +63,11 @@ h2{
 
 label{
     display:block;
-    margin-top:12px;
+    margin-top:10px;
     font-weight:bold;
 }
 
-input{
+input, select{
     width:100%;
     padding:12px;
     margin-top:5px;
@@ -71,7 +76,7 @@ input{
 }
 
 button{
-    margin-top:20px;
+    margin-top:15px;
     background:#6a5acd;
     color:white;
     border:none;
@@ -81,7 +86,7 @@ button{
 }
 
 button:hover{
-    background:#5b4bc4;
+    background:#5a4abd;
 }
 
 table{
@@ -97,8 +102,16 @@ th{
 
 th,td{
     border:1px solid #ddd;
-    padding:12px;
+    padding:10px;
     text-align:left;
+}
+
+.pagina{
+    display:none;
+}
+
+.pagina.ativa{
+    display:block;
 }
 
 .rodape{
@@ -106,67 +119,162 @@ th,td{
     color:white;
     text-align:center;
     padding:20px;
-    margin-top:40px;
+    margin-top:30px;
 }
 </style>
 </head>
 <body>
 
 <nav>
-    <a href="#">Home</a>
-    <a href="#">Pacientes</a>
-    <a href="#">Especialidades</a>
-    <a href="#">Agendamentos</a>
-    <a href="#">Consultas</a>
+    <a onclick="mostrarPagina('home')">Home</a>
+    <a onclick="mostrarPagina('pacientes')">Pacientes</a>
+    <a onclick="mostrarPagina('especialidades')">Especialidades</a>
+    <a onclick="mostrarPagina('agendamentos')">Agendamentos</a>
+    <a onclick="mostrarPagina('consultas')">Consultas</a>
 </nav>
 
 <header class="banner">
-    <h1>Cadastro de Pacientes</h1>
-    <p>Gerencie os pacientes da clínica de forma organizada e segura.</p>
+    <h1>🧠 PsicoAgenda</h1>
+    <p>Sistema de Agendamento para Psicólogos e Clínicas</p>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <h2>Novo Paciente</h2>
+    <!-- HOME -->
+    <div id="home" class="pagina ativa">
 
-        <form id="formPaciente">
+        <div class="card">
+            <h2>Bem-vindo ao PsicoAgenda</h2>
 
-            <label>Nome Completo:</label>
-            <input type="text" id="nome" required>
+            <p>
+                O sistema permite gerenciar pacientes,
+                especialidades, consultas e agendamentos
+                de forma simples e organizada.
+            </p>
+        </div>
 
-            <label>CPF:</label>
-            <input type="text" id="cpf" required>
-
-            <label>Telefone:</label>
-            <input type="tel" id="telefone" required>
-
-            <label>E-mail:</label>
-            <input type="email" id="email">
-
-            <button type="submit">
-                Salvar Paciente
-            </button>
-
-        </form>
     </div>
 
-    <div class="card">
-        <h2>Pacientes Cadastrados</h2>
+    <!-- PACIENTES -->
+    <div id="pacientes" class="pagina">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>
-                    <th>E-mail</th>
-                </tr>
-            </thead>
+        <div class="card">
 
-            <tbody id="lista-pacientes">
-            </tbody>
-        </table>
+            <h2>Cadastro de Pacientes</h2>
+
+            <form id="formPaciente">
+
+                <label>Nome:</label>
+                <input type="text" id="nome" required>
+
+                <label>CPF:</label>
+                <input type="text" id="cpf" required>
+
+                <label>Telefone:</label>
+                <input type="tel" id="telefone" required>
+
+                <label>E-mail:</label>
+                <input type="email" id="email">
+
+                <button type="submit">
+                    Salvar Paciente
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Pacientes Cadastrados</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-pacientes">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- ESPECIALIDADES -->
+    <div id="especialidades" class="pagina">
+
+        <div class="card">
+
+            <h2>Especialidades</h2>
+
+            <ul>
+                <li>🧠 Psicoterapia Individual</li>
+                <li>❤️ Terapia de Casal</li>
+                <li>👨‍👩‍👧 Terapia Familiar</li>
+                <li>📋 Avaliação Psicológica</li>
+                <li>🎓 Orientação Vocacional</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- AGENDAMENTOS -->
+    <div id="agendamentos" class="pagina">
+
+        <div class="card">
+
+            <h2>Novo Agendamento</h2>
+
+            <label>Paciente:</label>
+            <input type="text" id="pacienteAgendamento">
+
+            <label>Data:</label>
+            <input type="date" id="data">
+
+            <label>Horário:</label>
+            <input type="time" id="hora">
+
+            <button onclick="agendarConsulta()">
+                Agendar Consulta
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CONSULTAS -->
+    <div id="consultas" class="pagina">
+
+        <div class="card">
+
+            <h2>Consultas Agendadas</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-consultas">
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
 </div>
@@ -178,54 +286,137 @@ th,td{
 
 <script>
 
-const formulario = document.getElementById("formPaciente");
-const tabela = document.getElementById("lista-pacientes");
+/* MENU */
 
-let pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
+function mostrarPagina(id){
 
-function atualizarTabela(){
+    const paginas =
+    document.querySelectorAll(".pagina");
+
+    paginas.forEach(pagina=>{
+        pagina.classList.remove("ativa");
+    });
+
+    document
+    .getElementById(id)
+    .classList.add("ativa");
+}
+
+/* PACIENTES */
+
+const formulario =
+document.getElementById("formPaciente");
+
+let pacientes =
+JSON.parse(localStorage.getItem("pacientes")) || [];
+
+function atualizarPacientes(){
+
+    const tabela =
+    document.getElementById("lista-pacientes");
 
     tabela.innerHTML = "";
 
-    pacientes.forEach((paciente, indice) => {
+    pacientes.forEach(p=>{
 
         tabela.innerHTML += `
         <tr>
-            <td>${paciente.nome}</td>
-            <td>${paciente.cpf}</td>
-            <td>${paciente.telefone}</td>
-            <td>${paciente.email || "-"}</td>
+            <td>${p.nome}</td>
+            <td>${p.cpf}</td>
+            <td>${p.telefone}</td>
+            <td>${p.email || "-"}</td>
         </tr>
         `;
     });
 }
 
-atualizarTabela();
+atualizarPacientes();
 
-formulario.addEventListener("submit", function(e){
+formulario.addEventListener("submit",function(e){
 
     e.preventDefault();
 
-    const paciente = {
-        nome: document.getElementById("nome").value,
-        cpf: document.getElementById("cpf").value,
-        telefone: document.getElementById("telefone").value,
-        email: document.getElementById("email").value
-    };
-
-    pacientes.push(paciente);
+    pacientes.push({
+        nome: nome.value,
+        cpf: cpf.value,
+        telefone: telefone.value,
+        email: email.value
+    });
 
     localStorage.setItem(
         "pacientes",
         JSON.stringify(pacientes)
     );
 
-    atualizarTabela();
+    atualizarPacientes();
 
     formulario.reset();
 
     alert("Paciente cadastrado com sucesso!");
 });
+
+/* CONSULTAS */
+
+let consultas =
+JSON.parse(localStorage.getItem("consultas")) || [];
+
+function atualizarConsultas(){
+
+    const tabela =
+    document.getElementById("lista-consultas");
+
+    tabela.innerHTML = "";
+
+    consultas.forEach(c=>{
+
+        tabela.innerHTML += `
+        <tr>
+            <td>${c.paciente}</td>
+            <td>${c.data}</td>
+            <td>${c.hora}</td>
+        </tr>
+        `;
+    });
+}
+
+atualizarConsultas();
+
+function agendarConsulta(){
+
+    const paciente =
+    document.getElementById("pacienteAgendamento").value;
+
+    const data =
+    document.getElementById("data").value;
+
+    const hora =
+    document.getElementById("hora").value;
+
+    if(!paciente || !data || !hora){
+
+        alert("Preencha todos os campos.");
+        return;
+    }
+
+    consultas.push({
+        paciente,
+        data,
+        hora
+    });
+
+    localStorage.setItem(
+        "consultas",
+        JSON.stringify(consultas)
+    );
+
+    atualizarConsultas();
+
+    document.getElementById("pacienteAgendamento").value="";
+    document.getElementById("data").value="";
+    document.getElementById("hora").value="";
+
+    alert("Consulta agendada com sucesso!");
+}
 
 </script>
 
