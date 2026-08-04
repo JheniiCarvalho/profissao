@@ -6,6 +6,136 @@
     <link rel="stylesheet" href="estilo.css">
     <title>PsicoAgenda - Cadastro de Pacientes</title>
 </head>
+    <script>
+
+let consultas = [];
+
+function atualizarConsulta(){
+
+    let consulta =
+    document.getElementById("selConsulta");
+
+    let valor =
+    document.getElementById("txtValor");
+
+    let duracao =
+    document.getElementById("txtDuracao");
+
+    switch(consulta.value){
+
+        case "Psicoterapia":
+            valor.value = 150;
+            duracao.value = 50;
+        break;
+
+        case "Terapia de Casal":
+            valor.value = 250;
+            duracao.value = 90;
+        break;
+
+        case "Avaliação Psicológica":
+            valor.value = 350;
+            duracao.value = 120;
+        break;
+
+        default:
+            valor.value = "";
+            duracao.value = "";
+    }
+
+}
+
+function adicionarConsulta(){
+
+    let tipo =
+    document.getElementById("selConsulta").value;
+
+    let valor =
+    document.getElementById("txtValor").value;
+
+    let duracao =
+    document.getElementById("txtDuracao").value;
+
+    if(tipo==""){
+        alert("Selecione uma consulta.");
+        return;
+    }
+
+    consultas.push({
+        tipo,
+        valor,
+        duracao
+    });
+
+    atualizarTabela();
+}
+
+function atualizarTabela(){
+
+    let tabela =
+    document.getElementById("lista-consultas");
+
+    tabela.innerHTML="";
+
+    let total=0;
+    let tempo=0;
+
+    consultas.forEach(c=>{
+
+        tabela.innerHTML += `
+        <tr>
+            <td>${c.tipo}</td>
+            <td>${c.duracao} min</td>
+            <td>R$ ${Number(c.valor).toFixed(2)}</td>
+        </tr>
+        `;
+
+        total += Number(c.valor);
+        tempo += Number(c.duracao);
+
+    });
+
+    document.getElementById("txtTotal").innerHTML =
+    "Valor Total: R$ "+total.toFixed(2);
+
+    document.getElementById("txtTempoTotal").innerHTML =
+    "Tempo Total: "+tempo+" min";
+
+}
+
+function salvarConsulta(){
+
+    if(consultas.length==0){
+
+        alert("Adicione uma consulta.");
+
+        return;
+    }
+
+    localStorage.setItem(
+        "consultas",
+        JSON.stringify(consultas)
+    );
+
+    alert("Agendamento salvo com sucesso!");
+
+}
+
+window.onload=function(){
+
+    let select =
+    document.getElementById("selConsulta");
+
+    select.innerHTML=`
+        <option value="">Selecione...</option>
+        <option>Psicoterapia</option>
+        <option>Terapia de Casal</option>
+        <option>Avaliação Psicológica</option>
+    `;
+
+}
+
+</script>
 <body>
 
     <nav>
@@ -25,7 +155,7 @@
 <div class="container">
 
     <div style="margin-bottom:20px;">
-        <button onclick="window.location.href='consultas.html'">
+        <button onclick="alert('Página Histórico de Consultas ainda não foi criada.')">
             📋 Histórico de Consultas
         </button>
     </div>
