@@ -1,237 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PsicoAgenda - Consultas </title>
-    
- <nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PsicoAgenda - Consultas</title>
+
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+
+    <nav>
         <a href="index.html">Home</a>
         <a href="pacientes.html">Pacientes</a>
         <a href="especialidades.html">Especialidades</a>
         <a href="agendamentos.html">Agendamentos</a>
         <a href="consultas.html">Consultas</a>
     </nav>
-    
-    <h1>🧠 Histórico de Consultas</h1>
-    <p>Acompanhe todas as consultas psicológicas agendadas e realizadas</p>
-</header>
 
-<div class="container">
+    <header class="banner">
+        <h1>🧠 Histórico de Consultas</h1>
+        <p>Acompanhe todas as consultas psicológicas agendadas e realizadas.</p>
+    </header>
 
-    <div class="card resumo">
-        <h3>📊 Resumo Geral</h3>
-        <div class="estatisticas">
-            <div class="info-box">
-                <span id="totalConsultas">0</span>
-                <p>Consultas Registradas</p>
+    <div class="container">
+
+        <div class="card resumo">
+            <h3>📊 Resumo Geral</h3>
+
+            <div class="estatisticas">
+                <div class="info-box">
+                    <span id="totalConsultas">0</span>
+                    <p>Consultas Registradas</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
+        <div class="card">
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h2>Consultas Registradas</h2>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+                <h2>Consultas Registradas</h2>
 
-            <input
-                type="text"
-                id="pesquisa"
-                placeholder="🔍 Buscar paciente..."
-                onkeyup="filtrarConsultas()"
-                style="width:250px;">
+                <input
+                    type="text"
+                    id="pesquisa"
+                    placeholder="🔍 Buscar paciente..."
+                    onkeyup="filtrarConsultas()"
+                    style="width:250px;">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data/Hora</th>
+                        <th>Paciente</th>
+                        <th>Psicólogo</th>
+                        <th>Valor</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-consultas"></tbody>
+            </table>
+
+            <div id="semDados" style="display:none;text-align:center;padding:20px;">
+                Nenhuma consulta encontrada.
+            </div>
+
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Data/Hora</th>
-                    <th>Paciente</th>
-                    <th>Psicólogo</th>
-                    <th>Valor</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
+        <div id="card-detalhes" class="card" style="display:none;margin-top:25px;">
 
-            <tbody id="lista-consultas"></tbody>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h2>📋 Consulta #<span id="num-consulta"></span></h2>
 
-        </table>
+                <button onclick="fecharDetalhes()">✖ Fechar</button>
+            </div>
 
-        <div id="semDados" style="display:none; text-align:center; padding:20px;">
-            Nenhuma consulta encontrada.
+            <table style="margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Tipo de Consulta</th>
+                        <th>Duração</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-detalhes-consulta"></tbody>
+            </table>
+
         </div>
-
-    </div>
-
-    <div id="card-detalhes"
-         class="card"
-         style="display:none; margin-top:25px;">
-
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2>
-                📋 Consulta #<span id="num-consulta"></span>
-            </h2>
-
-            <button onclick="fecharDetalhes()">
-                ✖ Fechar
-            </button>
-        </div>
-
-        <table style="margin-top:15px;">
-            <thead>
-                <tr>
-                    <th>Tipo de Consulta</th>
-                    <th>Duração</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-
-            <tbody id="lista-detalhes-consulta"></tbody>
-        </table>
 
     </div>
 
-</div>
+    <script>
+        /* Cole aqui todo o seu JavaScript */
+    </script>
 
-<script>
+</body>
 
-let consultasCache = [];
-
-window.onload = carregarConsultas;
-
-function carregarConsultas(){
-
-    fetch('/listar-agendamentos')
-    .then(res => res.json())
-    .then(consultas => {
-
-        consultasCache = consultas;
-
-        document.getElementById(
-            'totalConsultas'
-        ).innerText = consultas.length;
-
-        renderizarTabela(consultas);
-    })
-    .catch(() => {
-
-        document.getElementById(
-            'lista-consultas'
-        ).innerHTML =
-        '<tr><td colspan="6">Erro ao carregar consultas.</td></tr>';
-    });
-}
-
-function renderizarTabela(lista){
-
-    const tabela =
-        document.getElementById('lista-consultas');
-
-    tabela.innerHTML = '';
-
-    if(lista.length === 0){
-
-        document.getElementById(
-            'semDados'
-        ).style.display = 'block';
-
-        return;
-    }
-
-    document.getElementById(
-        'semDados'
-    ).style.display = 'none';
-
-    lista.forEach(c => {
-
-        const data =
-        new Date(c.data).toLocaleString(
-            'pt-BR'
-        );
-
-        tabela.innerHTML += `
-            <tr>
-                <td>${c.id}</td>
-                <td>${data}</td>
-                <td><strong>${c.nome_paciente}</strong></td>
-                <td>${c.psicologo}</td>
-                <td>R$ ${c.total.toFixed(2)}</td>
-                <td>
-                    <button onclick="verDetalhes(${c.id})">
-                        Ver Detalhes
-                    </button>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-function filtrarConsultas(){
-
-    const texto =
-    document.getElementById(
-        'pesquisa'
-    ).value.toLowerCase();
-
-    const filtradas =
-    consultasCache.filter(c =>
-        c.nome_paciente
-         .toLowerCase()
-         .includes(texto)
-    );
-
-    renderizarTabela(filtradas);
-}
-
-function verDetalhes(id){
-
-    fetch(`/detalhes-consulta/${id}`)
-    .then(res => res.json())
-    .then(detalhes => {
-
-        document.getElementById(
-            'card-detalhes'
-        ).style.display = 'block';
-
-        document.getElementById(
-            'num-consulta'
-        ).innerText = id;
-
-        const tabela =
-        document.getElementById(
-            'lista-detalhes-consulta'
-        );
-
-        tabela.innerHTML = '';
-
-        detalhes.forEach(item => {
-
-            tabela.innerHTML += `
-                <tr>
-                    <td>${item.tipo_consulta}</td>
-                    <td>${item.duracao} min</td>
-                    <td>R$ ${item.valor.toFixed(2)}</td>
-                </tr>
-            `;
-        });
-
-        window.scrollTo({
-            top:
-            document.getElementById(
-                'card-detalhes'
-            ).offsetTop - 20,
-            behavior:'smooth'
-        });
-    });
-}
-
-function fecharDetalhes(){
-
-    document.getElementById(
-        'card-detalhes'
-    ).style.display = 'none';
-}
-
-</script>
-```
+</html>
